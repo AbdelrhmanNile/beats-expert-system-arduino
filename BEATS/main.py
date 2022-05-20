@@ -19,7 +19,12 @@ print(Panel("[blue] Welcome to BEATS \n[red]-----------------------\n [cyan]BEAT
 ready = int(Prompt.ask("[bold][red]Are you ready? [0 | 1]"))
 if ready:
     myage = int(Prompt.ask("[bold][blue]How old are you?"))
-    mybpm = getBpm()
+    try:
+        mybpm = getBpm()
+    except:
+        print(Panel("[bold][red] ERROR: ARDUINO IS NOT CONNECTED", title="[bold][red]ERROR"))
+        exit()
+    
     print(Panel(f"[bold][cyan]your bpm is: {mybpm}", title="[red]BPM", width=25))
 
     engine.declare(Person(age=myage, bpm=mybpm))
