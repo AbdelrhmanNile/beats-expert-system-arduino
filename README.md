@@ -1,4 +1,6 @@
+## Demo
 <img src = "/demo.png">
+
 ## About
 BEATS is an Expert System that reads your BPM from arduino pulse sensor and analyze your health based on your age and your BPM
 
