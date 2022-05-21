@@ -42,12 +42,23 @@ class Bpm(KnowledgeEngine):
     def poor(self):
         self.declare(Fact(is_poor=True))
 
+    @Rule(AS.s << Person(smoke=W()))
+    def smoking(self, s):
+        if s['smoke'] == True:
+            self.declare(Fact(is_smoker=True))
+        else:
+            self.declare(Fact(is_smoker=False))
 
-    @Rule(OR(Fact(is_athlete=L(True)), Fact(is_excellent=L(True)), Fact(is_great=L(True))))
-    def very_healthy(self):
+
+    @Rule(AND(OR(Fact(is_athlete=L(True)), Fact(is_excellent=L(True)), Fact(is_great=L(True))), AS.s << Fact(is_smoker=W())))
+    def very_healthy(self, s):
         self.declare(Fact(rate=10))
+        if s['is_smoker'] == True:
+            self.declare(Fact(is_new_smoker=True))
+        else:
+            self.declare(Fact(is_new_smoker=False))
     
-    @Rule(OR(Fact(is_good=L(True)), Fact(is_average=L(True))))
+    @Rule(AND(OR(Fact(is_good=L(True)), Fact(is_average=L(True)))))
     def healthy(self):
         self.declare(Fact(rate=7))
 
@@ -60,9 +71,11 @@ class Bpm(KnowledgeEngine):
         self.declare(Fact(rate=2))
 
 
-    @Rule(Fact(rate=L(10)))
-    def nice(self):
-        print(Panel("[green]Great job!\nYou are very healthy!\nKeep on working out an taking care of yourself!", title="[yellow]conclusion", width=35))
+    @Rule(Fact(rate=L(10)), AS.s << Fact(is_new_smoker=W()))
+    def nice(self, s):
+        print(Panel("[green]Great job!\nYou are very healthy!\nKeep on working out an taking care of yourself!", title="[yellow]conclusion", width=35),end="55")
+        if s['is_new_smoker'] == True:
+            print(Panel("[bold][red] you must be new to smoking\nit has not affect you health yet\n you need to stop smoking before it is to late", title="[red]WARNING", width=35))
 
     @Rule(Fact(rate=L(7)))
     def okay(self):
@@ -76,4 +89,6 @@ class Bpm(KnowledgeEngine):
     def very_bad(self):
         print(Panel("[red]Your health is very poor!!!!\nPlease visit a doctor ASAP to discuss your health issues", title="[yellow]conclusion", width=35))
 
-
+    @Rule(AND(OR(Fact(rate=L(7) | L(5))), Fact(is_smoker=L(True))))
+    def _(self):
+        print(Panel("[bold][red]Smoking has affected your health\nit will get worse if you did not stop",title="WARNING", width=35))
