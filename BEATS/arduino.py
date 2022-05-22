@@ -5,6 +5,8 @@ import time
 from rich import print
 from rich.table import Column
 from rich.progress import Progress, BarColumn, TextColumn
+import pyttsx3
+from speechs import *
 
 
 def main_func(): ## function  to read serial binary data from arduino
@@ -29,12 +31,16 @@ def main_func(): ## function  to read serial binary data from arduino
 
 def getBpm(): # function to get the BPM from main_func() 
     print("[red]\t\tPlease place your finger on the sensor and hold it still for 30 seconds\n")
+    speech.say(finger_speech)
+    speech.runAndWait()
     time.sleep(5)
 
     # progress bar
     text_column = TextColumn("[yellow]\tReading your BPM, please wait...", table_column=Column(ratio=1))
     bar_column = BarColumn(bar_width=None, table_column=Column(ratio=2))
     progress = Progress(text_column, bar_column, expand=True)
+    speech.say(wait_speech)
+    speech.runAndWait()
     with progress:
         for n in progress.track(range(5)):
             time.sleep(0.1)
@@ -46,7 +52,7 @@ def getBpm(): # function to get the BPM from main_func()
         bpm = main_func()
         time.sleep(5)
         i = i + 1
-        if(i == 4):
+        if(i == 3):
             breaker = False
             return bpm
 
