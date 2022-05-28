@@ -1,3 +1,4 @@
+from time import sleep
 from beats import *
 import arduino
 from rich.prompt import Prompt
@@ -6,9 +7,11 @@ from speechs import *
 
 
 def welcome():
-    print(Panel("[blue] Welcome to BEATS \n[red]-----------------------\n [cyan]BEATS is an Expert System \n that analyzes your health based on your BPM       \n [red]-----------------------\n [green]BEATS has a BPM sensor that will read your BPM \n  [yellow]BEATS only understands Binary values for Yes or No question \n  1 : Yes \n  0 : No", title="[red]BEATS", width=100, highlight=True))
+    print(Panel("[blue] Welcome to BEATS \n[red]-----------------------\n [cyan]BEATS is an Expert System \n that analyzes your health based on your BPM and some other parameters      \n [red]-----------------------\n[green]BEATS has a BPM sensor that will read your BPM \n-----------------------\n  [yellow]BEATS only understands Binary values for Yes or No question \n  1 : Yes \n  0 : No", title="[red]BEATS", width=100, highlight=True))
     speech.say(welcoming_speech)
     speech.runAndWait()
+    sleep(5)
+    
 
 def fire_beats():
     engine = Bpm()
@@ -20,6 +23,7 @@ def fire_beats():
     speech.runAndWait()
     smoker = int(Prompt.ask("[bold][cyan]Do you smoke? [0 | 1]")); print()
     try:
+        arduino.openSerial()
         mybpm = arduino.getBpm()
     except:
         print(Panel("[bold][red] ERROR: ARDUINO IS NOT CONNECTED", title="[bold][red]ERROR"))

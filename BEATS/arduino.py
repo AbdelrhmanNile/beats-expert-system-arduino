@@ -8,25 +8,30 @@ from rich.progress import Progress, BarColumn, TextColumn
 import pyttsx3
 from speechs import *
 
+def openSerial():
+    global arduino
+    arduino = serial.Serial('/dev/ttyACM0', 9600)
 
 def main_func(): ## function  to read serial binary data from arduino
-    arduino = serial.Serial('/dev/ttyACM0', 9600) # port changes based on your computer
+     # port changes based on your computer
+    global arduino
+
     arduino_data = arduino.readline()
 
     #decode binary data to utf-8
     decoded_values = str(arduino_data[0:len(arduino_data)].decode("utf-8"))
     values = decoded_values.split('x')
+    #print("values: "+ values)
     # typecast the data to int
     for item in values:
         int_values.append(int(item))
 
     value = int_values[0]
     
-    #reset arduino
+    #reset values
     arduino_data = 0
     int_values.clear()
     values.clear()
-    arduino.close()
     return value
 
 def getBpm(): # function to get the BPM from main_func() 
@@ -56,7 +61,11 @@ def getBpm(): # function to get the BPM from main_func()
             breaker = False
             return bpm
 
+    #bpm = main_func()
+    #return bpm
+
 # ----------------------------------------Main Code------------------------------------
+
 # Declare variables to be used
 values = []
 int_values = []

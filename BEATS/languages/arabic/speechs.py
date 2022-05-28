@@ -6,7 +6,7 @@ speech.setProperty("rate", 135)
 welcoming_speech = "ahlan beek fe beats expert system, men fadlak eeraa el taalemat"
 
 ready_speech = "gaheez?"
-age_speech = "aan dak kaam saanaa?"
+age_speech = "aandak kam sana?"
 smoke_speech = "be teshrab sagayer?"
 bpm_speech = "el bpm betaak "
 
@@ -18,7 +18,7 @@ rate10_speech = "Sehetaak kowaysa gedan"
 new_smoker_speech = "shaklak moodakhen gedeed, lesa sehetaak kowaysa, lazeem tebatal tadekheen"
 
 rate7_speech = "sehetaak kowaysa bas mesh awy, lazem telaab reyada"
-rate5_speech = "sehetaak taht el motawaset, lazem takol akl sehey we telaab reyada"
+    rate5_speech = "sehetaak taht el motawaset, lazem takol akl sehey we telaab reyada"
 rate2_speech = "sehetaak wehsha gedaan, lazeem tshoof doctor"
 
 smoker_speech = "el tadekheen bawaaz sehetaak"

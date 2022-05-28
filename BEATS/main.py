@@ -9,7 +9,6 @@ os.system('clear')
 engine = Bpm()
 engine.reset()
 
-layout = Layout()
 
 welcome()
 speech.say(ready_speech)
